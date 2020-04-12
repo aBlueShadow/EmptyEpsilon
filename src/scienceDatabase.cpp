@@ -91,13 +91,14 @@ void fillDefaultDatabaseData()
     P<ScienceDatabase> shipDatabase = new ScienceDatabase();
     shipDatabase->setName(tr("database", "Ships"));
 
-    std::vector<string> template_names = ShipTemplate::getTemplateNameList(ShipTemplate::Ship);
+    std::vector<std::pair<string, string> > template_names = ShipTemplate::getTemplateNameList(ShipTemplate::Ship);
     std::sort(template_names.begin(), template_names.end());
 
     std::vector<string> class_list;
     std::set<string> class_set;
-    for(string& template_name : template_names)
+    for(std::pair<string, string> template_pair : template_names)
     {
+        string& template_name = template_pair.second;
         P<ShipTemplate> ship_template = ShipTemplate::getTemplate(template_name);
         string class_name = ship_template->getClass();
         string subclass_name = ship_template->getSubClass();
@@ -116,8 +117,9 @@ void fillDefaultDatabaseData()
         class_database_entries[class_name] = shipDatabase->addEntry(class_name);
     }
 
-    for(string& template_name : template_names)
+    for(std::pair<string, string> template_pair : template_names)
     {
+        string& template_name = template_pair.second;
         P<ShipTemplate> ship_template = ShipTemplate::getTemplate(template_name);
         P<ScienceDatabase> entry = class_database_entries[ship_template->getClass()]->addEntry(ship_template->getLocaleName());
         
