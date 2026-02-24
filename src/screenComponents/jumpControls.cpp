@@ -171,4 +171,6 @@ void GuiJumpControls::onUpdate()
 
     if (keys.helms_execute_jump.getDown())
         my_player_info->commandJump(slider->getValue());
+    if (keys.helms_abort_jump.getDown())
+        my_player_info->commandAbortJump();
 }
